@@ -2,11 +2,13 @@ version: '2.1'
 
 services:
   postgresql-master:
-    image: 'bitnami/postgresql:12'
+    image: 'bitnami/postgresql:11'
+    container_name: postgresql_master
+    hostname: postgresql_master
     ports:
       - '5432'
     volumes:
-      - 'postgresql_master_data:/bitnami/postgresql'
+      - './postgresql_data:/bitnami/postgresql'
     environment:
       - POSTGRESQL_REPLICATION_MODE=master
       - POSTGRESQL_REPLICATION_USER=repl_user
@@ -16,7 +18,9 @@ services:
       - POSTGRESQL_DATABASE=my_database
       - ALLOW_EMPTY_PASSWORD=yes
   postgresql-slave:
-    image: 'bitnami/postgresql:12'
+    image: 'bitnami/postgresql:11'
+    container_name: postgresql_slave
+    hostname: postgresql_slave
     ports:
       - '5432'
     depends_on:
